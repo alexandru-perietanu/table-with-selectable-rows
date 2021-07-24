@@ -1,0 +1,19 @@
+<table>
+  <tr>
+    <th *ngFor="let column of columnDefinition">
+      <table-cell-base
+        [component]="column.headerComponent"
+        [componentData]="column.data"
+      ></table-cell-base>
+    </th>
+  </tr>
+
+  <tr *ngFor="let field of data">
+    <td *ngFor="let column of columnDefinition">
+      <table-cell-base
+        [component]="column.rowComponent"
+        [componentData]="field[column.field]"
+      ></table-cell-base>
+    </td>
+  </tr>
+</table>
