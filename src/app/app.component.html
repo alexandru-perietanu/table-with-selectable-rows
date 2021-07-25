@@ -1,33 +1,13 @@
-<!-- <table-container
-  [component]="dynamicComp"
-  [componentData]="checkBoxData"
-  (emitter)="handleEmit($event)"> -->
-  <!-- <table-check-box
-    name="test"
-    (changeEvent)="handleChange($event)"
-  ></table-check-box> -->
-<!-- </table-container> -->
+<div>
+  <input type="checkbox" id="selectedItems" name="interest" (click)="handleCheckboxClick($event)"/>
+  <label for="selectedItems">{{ selectedText() }}</label>
+</div>
+
 
 <selectable-table
   [columnDefinition]="tableColumnDefinition"
   [data]="tableData"
   [tableSettings]="tableSettings"
   (emitter)="handleEmit($event)"
+  #selectableTable
 ></selectable-table>
-
-<!-- <table-check-box
-  [data]={name: "test1"}
-  (changeEvent)="handleChange($event)"
-></table-check-box>
-<table-check-box
-  name="test2"
-  (changeEvent)="handleChange($event)"
-></table-check-box>
-<table-check-box
-  name="test3"
-  (changeEvent)="handleChange($event)"
-></table-check-box>
-<table-check-box
-  name="test4"
-  (changeEvent)="handleChange($event)"
-></table-check-box> -->

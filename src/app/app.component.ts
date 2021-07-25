@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CheckBoxEvent } from './components/selectable-table/components/check-box/check-box-types';
 import { TextCellComponent } from './components/selectable-table/components/text-cell/text-cell.component';
+import { SelectableTableComponent } from './components/selectable-table/selectable-table.component';
 import { TableSettings } from './components/selectable-table/table-types';
 import { StatusCellComponent } from './components/status-cell/status-cell.component';
 
@@ -10,6 +11,9 @@ import { StatusCellComponent } from './components/status-cell/status-cell.compon
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+
+  @ViewChild("selectableTable") selectableTable?: SelectableTableComponent;
+  
   title = 'table-with-selectable-rows';
 
   selectedRows: Set<number> = new Set<number>();
@@ -83,6 +87,18 @@ export class AppComponent {
     },
   ];
 
+  constructor(private el: ElementRef) {
+    
+  }
+
+  handleCheckboxClick(event: any) {
+    if (this.selectedRows.size < this.tableData.length) {
+        this.selectableTable?.selectAll();
+    } else if (this.selectedRows.size == this.tableData.length) {
+      this.selectableTable?.deselectAll();
+    }
+  }
+
   handleEmit(event: any) {
     if (event.type == 'CheckboxEvent') {
       this.handleTableSelect(event as CheckBoxEvent);
@@ -98,8 +114,30 @@ export class AppComponent {
     } else {
       this.selectedRows.delete(index);
     }
-    
-    console.log(this.selectedRows);
 
+    this.isIntermediate();
+    this.isChecked();
+  }
+
+  selectedText(): string {
+    if (this.selectedRows.size == 0) {
+      return "None Selected";
+    } else {
+      return `Selected ${this.selectedRows.size}`;
+    }
+  }
+
+  isIntermediate() {
+    let checkBox = this.el.nativeElement.querySelector("#selectedItems");
+    if (this.selectedRows.size == 0 || this.selectedRows.size == this.tableData.length) {
+      checkBox.indeterminate = false;
+    } else {
+      checkBox.indeterminate  = true;
+    }
+  }
+
+  isChecked() {
+    let checkBox = this.el.nativeElement.querySelector("#selectedItems");
+    checkBox.checked = this.selectedRows.size == this.tableData.length;
   }
 }

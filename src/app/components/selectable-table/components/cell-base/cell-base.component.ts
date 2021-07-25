@@ -20,6 +20,7 @@ import { IDynamicContent } from '../../interfaces/dynamic-content';
 export class CellBaseComponent implements OnInit {
   @ViewChild(DynamicContentDirective, { static: true })
   dynamicContent!: DynamicContentDirective;
+  componentRef: any;
 
   @Input()
   component?: Type<any>;
@@ -43,10 +44,10 @@ export class CellBaseComponent implements OnInit {
     const viewContainerRef = this.dynamicContent.viewContainerRef;
     viewContainerRef.clear();
 
-    const componentRef =
+    this.componentRef =
       viewContainerRef.createComponent<IDynamicContent>(componentFactory);
-    componentRef.instance.data = this.componentData;
-    componentRef.instance.emitter.subscribe((event: any) => {
+    this.componentRef.instance.data = this.componentData;
+    this.componentRef.instance.emitter.subscribe((event: any) => {
       this.emitter.emit(event);
     });
   }

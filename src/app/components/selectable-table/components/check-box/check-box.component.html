@@ -3,8 +3,9 @@
     type="checkbox"
     id="{{ data.name }}"
     name="{{ data.name }}"
-    [(ngModel)]="isChecked"
-    (change)="checkValue(isChecked ? true : false)"
+    [(ngModel)]="data.isChecked"
+    (change)="checkValue(data.isChecked ? true : false)"
+    #checkbox
   />
   <label for="{{ data.name }}">{{ data.label }}</label>
 </div>

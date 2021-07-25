@@ -12,7 +12,6 @@ import { StatusCellComponent } from './components/status-cell/status-cell.compon
   ],
   imports: [
     BrowserModule,
-    
     SelectableTableModule
   ],
   providers: [],

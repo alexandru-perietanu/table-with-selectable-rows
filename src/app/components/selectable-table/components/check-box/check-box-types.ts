@@ -7,5 +7,6 @@ export type CheckBoxEvent = {
 export type CheckBoxData = {
   name: string;
   label?: string;
+  isChecked: boolean
 };
 

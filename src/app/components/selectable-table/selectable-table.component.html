@@ -20,8 +20,9 @@
     <tr *ngFor="let field of data; let i = index" class="row-{{i}}">
       <td width="50px" *ngIf="tableSettings.selectable" class="checkbox-field">
         <table-cell-base
+          #checkboxes
           [component]="checkBox"
-          [componentData]="{ name: 'row-' + i }"
+          [componentData]="checkBoxData[i]"
           (emitter)="handleSelect($event)"
         ></table-cell-base>
       </td>
