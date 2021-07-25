@@ -91,6 +91,21 @@ export class AppComponent {
     
   }
 
+  handleDownloadSelected(event: MouseEvent) {
+    let data = "";
+    for (let i = 0; i < this.tableData.length; i++) {
+      if (this.selectedRows.has(i) && this.tableData[i].status.toLocaleLowerCase() == "available") {
+        data += `${this.tableData[i].device}: ${this.tableData[i].path}\n`;
+      }
+    }
+    if (data != "") {
+      window.alert(data);
+    } else {
+      window.alert("No devices selected or selected devices are not available");
+    }
+
+  }
+
   handleCheckboxClick(event: any) {
     if (this.selectedRows.size < this.tableData.length) {
         this.selectableTable?.selectAll();

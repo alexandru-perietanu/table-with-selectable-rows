@@ -1,8 +1,16 @@
 <div>
-  <input type="checkbox" id="selectedItems" name="interest" (click)="handleCheckboxClick($event)"/>
+  <input
+    type="checkbox"
+    id="selectedItems"
+    name="interest"
+    (click)="handleCheckboxClick($event)"
+  />
   <label for="selectedItems">{{ selectedText() }}</label>
-</div>
 
+  <span class="downloadSelected" (click)="handleDownloadSelected($event)"
+    >Download Selected</span
+  >
+</div>
 
 <selectable-table
   [columnDefinition]="tableColumnDefinition"
