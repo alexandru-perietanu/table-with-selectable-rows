@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IDynamicContent } from 'src/app/components/dynamic-content';
+import { IDynamicContent } from '../../interfaces/dynamic-content';
+
 
 @Component({
   selector: 'table-text-cell',

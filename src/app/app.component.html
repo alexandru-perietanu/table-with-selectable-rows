@@ -1,17 +1,18 @@
-<table-container
+<!-- <table-container
   [component]="dynamicComp"
   [componentData]="checkBoxData"
-  (emitter)="handleEmit($event)"
->
+  (emitter)="handleEmit($event)"> -->
   <!-- <table-check-box
     name="test"
     (changeEvent)="handleChange($event)"
   ></table-check-box> -->
-</table-container>
+<!-- </table-container> -->
 
 <selectable-table
   [columnDefinition]="tableColumnDefinition"
   [data]="tableData"
+  [tableSettings]="tableSettings"
+  (emitter)="handleEmit($event)"
 ></selectable-table>
 
 <!-- <table-check-box

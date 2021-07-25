@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import {
-  CheckBoxData,
-  CheckBoxEvent,
-} from './components/check-box/check-box-types';
-import { CheckBoxComponent } from './components/check-box/check-box.component';
+import { CheckBoxEvent } from './components/selectable-table/components/check-box/check-box-types';
 import { TextCellComponent } from './components/selectable-table/components/text-cell/text-cell.component';
+import { TableSettings } from './components/selectable-table/table-types';
+import { StatusCellComponent } from './components/status-cell/status-cell.component';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +11,13 @@ import { TextCellComponent } from './components/selectable-table/components/text
 })
 export class AppComponent {
   title = 'table-with-selectable-rows';
+
+  selectedRows: Set<number> = new Set<number>();
+
+  tableSettings: TableSettings = {
+    width: '1200px',
+    selectable: true,
+  };
 
   tableColumnDefinition = [
     {
@@ -37,7 +42,7 @@ export class AppComponent {
       data: 'Status',
       field: 'status',
       headerComponent: TextCellComponent,
-      rowComponent: TextCellComponent,
+      rowComponent: StatusCellComponent,
     },
   ];
 
@@ -78,14 +83,23 @@ export class AppComponent {
     },
   ];
 
-  dynamicComp = CheckBoxComponent;
-  checkBoxData: CheckBoxData = { name: 'test' };
-
-  handleChange(event: CheckBoxEvent) {
-    console.log(event);
+  handleEmit(event: any) {
+    if (event.type == 'CheckboxEvent') {
+      this.handleTableSelect(event as CheckBoxEvent);
+    }
   }
 
-  handleEmit(event: any) {
-    console.log('!!!!!!!!!!!! ', event);
+  handleTableSelect(event: CheckBoxEvent) {
+    let index = +event.name.split('-')[1];
+    let value = event.value;
+
+    if (value) {
+      this.selectedRows.add(index);
+    } else {
+      this.selectedRows.delete(index);
+    }
+    
+    console.log(this.selectedRows);
+
   }
 }

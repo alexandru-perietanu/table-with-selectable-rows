@@ -8,21 +8,21 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { DynamicContentDirective } from 'src/app/components/directives/dynamic-content.directive';
-import { IDynamicContent } from 'src/app/components/dynamic-content';
+import { DynamicContentDirective } from '../../directives/dynamic-content.directive';
+import { IDynamicContent } from '../../interfaces/dynamic-content';
 
 
 @Component({
   selector: 'table-cell-base',
   templateUrl: './cell-base.component.html',
-  styleUrls: ['./cell-base.component.css']
+  styleUrls: ['./cell-base.component.css'],
 })
 export class CellBaseComponent implements OnInit {
   @ViewChild(DynamicContentDirective, { static: true })
   dynamicContent!: DynamicContentDirective;
 
   @Input()
-  component!: Type<any>;
+  component?: Type<any>;
 
   @Input()
   componentData: any;
@@ -33,14 +33,12 @@ export class CellBaseComponent implements OnInit {
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
   ngOnInit(): void {
-    console.log("init");
     this.loadComponent();
   }
 
   loadComponent() {
-    console.log("load component")
-    const componentFactory =
-      this.componentFactoryResolver.resolveComponentFactory(this.component);
+    if (!this.component) return;
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.component);
 
     const viewContainerRef = this.dynamicContent.viewContainerRef;
     viewContainerRef.clear();

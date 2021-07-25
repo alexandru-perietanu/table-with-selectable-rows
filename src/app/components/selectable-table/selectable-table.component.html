@@ -1,19 +1,36 @@
-<table>
-  <tr>
-    <th *ngFor="let column of columnDefinition">
-      <table-cell-base
-        [component]="column.headerComponent"
-        [componentData]="column.data"
-      ></table-cell-base>
-    </th>
-  </tr>
+<table [style.width]="tableSettings.width">
+  <thead>
+    <tr>
+      <th width="50px" *ngIf="tableSettings.selectable">
+        <table-cell-base
+          [component]="undefined"
+          [componentData]=""
+        ></table-cell-base>
+      </th>
+      <th *ngFor="let column of columnDefinition">
+        <table-cell-base
+          [component]="column.headerComponent"
+          [componentData]="column.data"
+        ></table-cell-base>
+      </th>
+    </tr>
+  </thead>
 
-  <tr *ngFor="let field of data">
-    <td *ngFor="let column of columnDefinition">
-      <table-cell-base
-        [component]="column.rowComponent"
-        [componentData]="field[column.field]"
-      ></table-cell-base>
-    </td>
-  </tr>
+  <tbody>
+    <tr *ngFor="let field of data; let i = index" class="row-{{i}}">
+      <td width="50px" *ngIf="tableSettings.selectable" class="checkbox-field">
+        <table-cell-base
+          [component]="checkBox"
+          [componentData]="{ name: 'row-' + i }"
+          (emitter)="handleSelect($event)"
+        ></table-cell-base>
+      </td>
+      <td *ngFor="let column of columnDefinition">
+        <table-cell-base
+          [component]="column.rowComponent"
+          [componentData]="field[column.field]"
+        ></table-cell-base>
+      </td>
+    </tr>
+  </tbody>
 </table>

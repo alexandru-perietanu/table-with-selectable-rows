@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { IDynamicContent } from '../dynamic-content';
-import { CheckBoxData, CheckBoxEvent } from './check-box-types';
+import { IDynamicContent } from '../../interfaces/dynamic-content';
+import { CheckBoxData } from './check-box-types';
 
 @Component({
   selector: 'table-check-box',
@@ -22,6 +22,6 @@ export class CheckBoxComponent implements OnInit, IDynamicContent {
 
   checkValue(value: boolean) {
     //this.changeEvent.emit({ name: this.data.name, value: value });
-    this.emitter.next({ name: this.data.name, value: value });
+    this.emitter.next({type:"CheckboxEvent", name: this.data.name, value: value });
   }
 }
