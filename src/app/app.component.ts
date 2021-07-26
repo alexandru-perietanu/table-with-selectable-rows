@@ -93,7 +93,7 @@ export class AppComponent {
     for (let i = 0; i < this.tableData.length; i++) {
       if (
         this.selectedRows.has(i) &&
-        this.tableData[i].status.toLocaleLowerCase() == 'available'
+        this.tableData[i].status.toLocaleLowerCase() === 'available'
       ) {
         data += `${this.tableData[i].device}: ${this.tableData[i].path}\n`;
       }
@@ -108,16 +108,16 @@ export class AppComponent {
   handleCheckboxClick(event: MouseEvent) {
     if (this.selectedRows.size < this.tableData.length) {
       this.selectableTable?.selectAll();
-    } else if (this.selectedRows.size == this.tableData.length) {
+    } else if (this.selectedRows.size === this.tableData.length) {
       this.selectableTable?.deselectAll();
     }
   }
 
   handleEmit(event: any) {
-    if (event.type == 'CheckboxEvent') {
+    if (event.type === 'CheckboxEvent') {
       this.handleTableSelect(event as CheckBoxEvent);
     }
-    if (event.type == 'StatusEvent') {
+    if (event.type === 'StatusEvent') {
       console.log(event);
     }
   }
@@ -137,7 +137,7 @@ export class AppComponent {
   }
 
   selectedText(): string {
-    if (this.selectedRows.size == 0) {
+    if (this.selectedRows.size === 0) {
       return 'None Selected';
     } else {
       return `Selected ${this.selectedRows.size}`;
@@ -147,8 +147,8 @@ export class AppComponent {
   isIntermediate() {
     let checkBox = this.el.nativeElement.querySelector('#selectedItems');
     if (
-      this.selectedRows.size == 0 ||
-      this.selectedRows.size == this.tableData.length
+      this.selectedRows.size === 0 ||
+      this.selectedRows.size === this.tableData.length
     ) {
       checkBox.indeterminate = false;
     } else {
