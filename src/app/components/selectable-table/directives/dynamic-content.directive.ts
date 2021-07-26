@@ -4,7 +4,5 @@ import { Directive, ViewContainerRef } from '@angular/core';
   selector: '[dynamicContent]'
 })
 export class DynamicContentDirective {
-
   constructor(public viewContainerRef: ViewContainerRef) { }
-
 }

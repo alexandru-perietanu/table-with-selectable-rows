@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CheckBoxEvent } from './components/selectable-table/components/check-box/check-box-types';
 import { TextCellComponent } from './components/selectable-table/components/text-cell/text-cell.component';
 import { SelectableTableComponent } from './components/selectable-table/selectable-table.component';
-import { TableSettings } from './components/selectable-table/table-types';
+import { TableColumnDefinition, TableSettings } from './components/selectable-table/table-types';
 import { StatusCellComponent } from './components/status-cell/status-cell.component';
 
 @Component({
@@ -11,9 +11,8 @@ import { StatusCellComponent } from './components/status-cell/status-cell.compon
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  @ViewChild('selectableTable') selectableTable?: SelectableTableComponent;
 
-  @ViewChild("selectableTable") selectableTable?: SelectableTableComponent;
-  
   title = 'table-with-selectable-rows';
 
   selectedRows: Set<number> = new Set<number>();
@@ -23,7 +22,7 @@ export class AppComponent {
     selectable: true,
   };
 
-  tableColumnDefinition = [
+  tableColumnDefinition: Array<TableColumnDefinition> = [
     {
       data: 'Name',
       field: 'name',
@@ -87,28 +86,28 @@ export class AppComponent {
     },
   ];
 
-  constructor(private el: ElementRef) {
-    
-  }
+  constructor(private el: ElementRef) {}
 
   handleDownloadSelected(event: MouseEvent) {
-    let data = "";
+    let data = '';
     for (let i = 0; i < this.tableData.length; i++) {
-      if (this.selectedRows.has(i) && this.tableData[i].status.toLocaleLowerCase() == "available") {
+      if (
+        this.selectedRows.has(i) &&
+        this.tableData[i].status.toLocaleLowerCase() == 'available'
+      ) {
         data += `${this.tableData[i].device}: ${this.tableData[i].path}\n`;
       }
     }
-    if (data != "") {
+    if (data != '') {
       window.alert(data);
     } else {
-      window.alert("No devices selected or selected devices are not available");
+      window.alert('No devices selected or selected devices are not available');
     }
-
   }
 
-  handleCheckboxClick(event: any) {
+  handleCheckboxClick(event: MouseEvent) {
     if (this.selectedRows.size < this.tableData.length) {
-        this.selectableTable?.selectAll();
+      this.selectableTable?.selectAll();
     } else if (this.selectedRows.size == this.tableData.length) {
       this.selectableTable?.deselectAll();
     }
@@ -117,6 +116,9 @@ export class AppComponent {
   handleEmit(event: any) {
     if (event.type == 'CheckboxEvent') {
       this.handleTableSelect(event as CheckBoxEvent);
+    }
+    if (event.type == 'StatusEvent') {
+      console.log(event);
     }
   }
 
@@ -136,23 +138,26 @@ export class AppComponent {
 
   selectedText(): string {
     if (this.selectedRows.size == 0) {
-      return "None Selected";
+      return 'None Selected';
     } else {
       return `Selected ${this.selectedRows.size}`;
     }
   }
 
   isIntermediate() {
-    let checkBox = this.el.nativeElement.querySelector("#selectedItems");
-    if (this.selectedRows.size == 0 || this.selectedRows.size == this.tableData.length) {
+    let checkBox = this.el.nativeElement.querySelector('#selectedItems');
+    if (
+      this.selectedRows.size == 0 ||
+      this.selectedRows.size == this.tableData.length
+    ) {
       checkBox.indeterminate = false;
     } else {
-      checkBox.indeterminate  = true;
+      checkBox.indeterminate = true;
     }
   }
 
   isChecked() {
-    let checkBox = this.el.nativeElement.querySelector("#selectedItems");
+    let checkBox = this.el.nativeElement.querySelector('#selectedItems');
     checkBox.checked = this.selectedRows.size == this.tableData.length;
   }
 }

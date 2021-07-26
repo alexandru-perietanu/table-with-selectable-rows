@@ -10,7 +10,7 @@ import { IDynamicContent } from '../../interfaces/dynamic-content';
 export class TextCellComponent implements OnInit, IDynamicContent {
 
   @Input()
-  data!: string;
+  data: string = "";
     
   @Output()
   emitter: EventEmitter<any> = new EventEmitter<any>();

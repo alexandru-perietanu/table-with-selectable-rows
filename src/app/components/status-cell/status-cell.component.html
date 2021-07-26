@@ -1,1 +1,4 @@
-<p><span *ngIf="data.toLowerCase()=='available'" class="available"></span>{{data}}</p>
+<p (click)="handleClick($event)">
+  <span *ngIf="data.toLowerCase() == 'available'" class="available"></span
+  >{{ data }}
+</p>

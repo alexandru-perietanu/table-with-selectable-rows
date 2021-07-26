@@ -30,6 +30,7 @@
         <table-cell-base
           [component]="column.rowComponent"
           [componentData]="field[column.field]"
+          (emitter)="handleGenericEvent($event)"
         ></table-cell-base>
       </td>
     </tr>

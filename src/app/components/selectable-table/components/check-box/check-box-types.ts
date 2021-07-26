@@ -3,7 +3,6 @@ export type CheckBoxEvent = {
   value: boolean;
 };
 
-
 export type CheckBoxData = {
   name: string;
   label?: string;

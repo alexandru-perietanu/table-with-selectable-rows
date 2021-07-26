@@ -10,7 +10,7 @@ import { IDynamicContent } from '../selectable-table/interfaces/dynamic-content'
 export class StatusCellComponent implements OnInit, IDynamicContent {
 
   @Input()
-  data!: string;
+  data: string = "";
     
   @Output()
   emitter: EventEmitter<any> = new EventEmitter<any>();
@@ -18,6 +18,13 @@ export class StatusCellComponent implements OnInit, IDynamicContent {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  handleClick(event: MouseEvent) {
+    this.emitter.next({
+      type: 'StatusEvent',
+      name: this.data,
+    });
   }
 
 }

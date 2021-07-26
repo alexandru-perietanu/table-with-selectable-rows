@@ -1,6 +1,4 @@
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -11,7 +9,6 @@ import {
   Renderer2,
   Type,
   ViewChildren,
-  ViewContainerRef,
 } from '@angular/core';
 import { CellBaseComponent } from './components/cell-base/cell-base.component';
 import {
@@ -19,7 +16,7 @@ import {
   CheckBoxEvent,
 } from './components/check-box/check-box-types';
 import { CheckBoxComponent } from './components/check-box/check-box.component';
-import { TableSettings } from './table-types';
+import { TableColumnDefinition, TableSettings } from './table-types';
 
 @Component({
   selector: 'selectable-table',
@@ -33,7 +30,7 @@ export class SelectableTableComponent implements OnInit {
   data: any;
 
   @Input()
-  columnDefinition: any;
+  columnDefinition!: Array<TableColumnDefinition>;
 
   @Input()
   tableSettings: TableSettings = {
@@ -67,6 +64,11 @@ export class SelectableTableComponent implements OnInit {
     this.emitter.emit(event);
   }
 
+  //TODO: convert any to strict type
+  handleGenericEvent(event: any) {
+    this.emitter.emit(event);
+  }
+
   ngOnInit(): void {
     if (this.tableSettings.selectable) {
       for (let i = 0; i < this.data.length; i++) {
@@ -79,11 +81,15 @@ export class SelectableTableComponent implements OnInit {
   }
 
   public selectAll() {
-    this.forceCheckBoxesToValue(true);
+    if (this.tableSettings.selectable) {
+      this.forceCheckBoxesToValue(true);
+    }
   }
 
   public deselectAll() {
-    this.forceCheckBoxesToValue(false);
+    if (this.tableSettings.selectable) {
+      this.forceCheckBoxesToValue(false);
+    }
   }
 
   private forceCheckBoxesToValue(value: boolean) {
